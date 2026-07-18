@@ -20,7 +20,7 @@
   To start with I would want to improve error handling that I have seemingly forgotten to add. Add atomic saves to write a temporary file and use os.replace to avoid an error that might cause half-written files when outputting the result. I would also expand the exercise to be included into its own project and possibly consider multiple classes that interact with eachother as experimentation.
 
 - Which programming patterns did I use?:
-  Dictionaries, File I/O, CRUD, Variables/State, Output.
+  Dictionaries, File I/O, CRUD, Variables/State, Output, Functions.
 
 # Result vs Review
 
