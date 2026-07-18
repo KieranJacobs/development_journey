@@ -1,19 +1,23 @@
 # Programming Patterns
 
-- [ ] Input
-- [ ] Output
-- [ ] Validation
-- [ ] Selection
-- [ ] Iteration
-- [ ] Accumulator
-- [ ] Counter
-- [ ] Search
-- [ ] Lookup
-- [ ] Mapping
-- [ ] Transformation
-- [ ] Aggregation
-- [ ] CRUD - Create, Read, Update, Delete
-- [ ] Sorting
-- [ ] Filtering
-- [ ] File I/O
-- [ ] Error Handling
+- [ ] Input - Obtain data from a user, file, API, or another source.
+- [ ] Output - Present information to the user or another system.
+- [ ] Variables / State - Store information that may change while the program runs.
+- [ ] Validation - Ensure data is acceptable before using it.
+- [ ] Selection - Choose between multiple paths.
+- [ ] Iteration - Repeat work.
+- [ ] Search - Find whether something exists.
+- [ ] Lookup - Retrieve information associated with a key.
+- [ ] Mapping - Convert one value into another using a relationship.
+- [ ] Transformation - Convert data into antoher form.
+- [ ] Accumulator - Build a running total.
+- [ ] Counter - Count how many times something happens.
+- [ ] Aggregation - Produce one summary value from many values.
+- [ ] Filtering - Keep only items that match a condition.
+- [ ] Sorting - Arrange data in specific order.
+- [ ] CRUD (Create, Read, Update, Delete)
+- [ ] Error Handling - Prevent the program from crashing unexpectedly.
+- [ ] File I/O - Save or Load persistent information.
+- [ ] Functions - Group related behaviour into reusable pieces.
+- [ ] Modularization - Organize code into multiple files/modules.
+- [ ] Object-Oriented Design - Organizing related data and behaviour together.
