@@ -28,6 +28,8 @@
 
 # Decisions I made and why
 
--
--
--
+- I decided to go with this exercise because I felt that I needed to work on [File I/O] and also become more familiar with [@decorators], the primary reason for this was because I wanted to see how far I could go when it came to expanding a class and its associated attributes while also working with data exchanging. That is also why I added [JSON] functionality to this exercise. A sort of interesting challenge to use all three simultaneously, and adding some quality of life additives in the exercise/project to enhance the overall look and flow of the program.
+
+# Future features
+
+- Potentially expanding the idea inside of a larger project.
