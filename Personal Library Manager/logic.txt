@@ -1,0 +1,69 @@
+Personal Library Manager Logic:
+
+library = 
+	[
+		{
+		bookTitle : "NAME"
+		author : "John Doe"
+		genre : "GENRE"
+		status : TRUE or FALSE
+		}
+	] x[AMOUNT]
+books = [ ]
+userInput = input("Enter an option here: ")
+
+
+Display Menu;
+	1 . View all books
+	2 . Search by Title
+	3 . Show unread books
+	4 . Add a new book
+	5 . Show Statistics
+	6 . Quit
+
+	IF [View all Books :: 1];
+		DISPLAY library;
+			{
+			bookTitle : "NAME"
+			author : "John Doe"
+			genre : "GENRE"
+			status : TRUE or FALSE
+			} x[AMOUNT]
+
+	ELSE IF [Search by Title :: 2];
+		userInput(input);
+		SEARCH(library);
+		FIND(input).EXISTS(TRUE/FALSE);
+		PRINT(bookTitle, author, genre, status);
+		RETURN Display Menu;
+	
+	ELSE IF [Show unread books :: 3];
+		SEARCH(library.status(FALSE));
+		books = library.status(FALSE);
+		PRINT(books);
+		RETURN Display Menu;
+	
+	ELSE IF [Add a new book :: 4];
+		userInput("Input bookTitle, author, genre, status");
+		new = userInput(input);
+		ADD new(library.append)
+		books = library;
+		PRINT(books);
+	
+	ELSE IF [Show Statistics :: 5];		
+		bookCount = COUNT(library.bookTitle);
+		booksRead = COUNT(library.status=TRUE);
+		booksNRead = COUNT(library.status=FALSE);
+		bookPercent = booksRead / bookCount * 100;
+
+		PRINT(F"Total Books: {bookCount}, 
+		Total Books Read: {booksRead},
+		Total Books Unread: {booksNRead},
+		Total Percentage completed: {bookPercent}.");
+	
+	ELSE IF [Quit :: 6];
+		STOP library_manager.py;
+	
+	ELSE;
+		PRINT("INVALID OPTION INPUT");
+		RETURN Display Menu;
