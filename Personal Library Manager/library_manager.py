@@ -25,7 +25,7 @@ library = [
     }
 ]
 
-
+# prints the menu for the program
 def display_menu():
     print()
     print("====== // Personal Library Manager // ======")
@@ -39,6 +39,7 @@ def display_menu():
     print("========== // // ==========")
     print()
 
+# prints all books in the library with gaps between each dict
 def view_books():
     print()
     print("====== All Books ======")
@@ -48,8 +49,8 @@ def view_books():
         print(f"Genre: {book['genre']}")
         print(f"is Read?: {book['status']}")
         print()
-    
 
+# Using user input, set found to False, for each book in library, if bookTitle is same as user input, print results
 def search_book():
     print()
     searchTitle = input("Input a valid Book Title: ")
@@ -63,9 +64,10 @@ def search_book():
             print(f"Genre: {book['genre']}")
             print(f"is Read?: {book['status']}")
     if not found:
-        print("INVALID BOOK TITLE!")
+        print("INVALID BOOK TITLE!") # basic error handling
     print()
 
+# for book in library, if book status is NOT True(False), print results
 def unread_books():
     for unread in library:
         if not unread["status"]:
@@ -75,6 +77,7 @@ def unread_books():
             print(f"Genre: {unread['genre']}")
             print(f"is Read?: {unread['status']}")
 
+# print title, ask for user input on book data, convert status key from string to boolean, update list with new dictionary of new book, print entire list of dictionaries
 def add_book():
     print()
     print("====== // Input new Book Data // ======")
@@ -95,6 +98,7 @@ def add_book():
     print(library)
     print()
 
+# print title, declare variables, count all existing dicts in library list, for each book in library, if book status is True add 1 to Read counter, if not True add 1 to unRead counter, calculate percentage of completed books(Read) by how many books exist in library, print results
 def show_stats():
     print()
     print("====== // Library Statistics // ======")
@@ -115,7 +119,7 @@ def show_stats():
     print()
 
 
-
+# looping menu
 while True:
     display_menu()
 
@@ -140,5 +144,5 @@ while True:
         break
     
     else:
-        print("INVALID OPTION CHOSEN!")
+        print("INVALID OPTION CHOSEN!") # basic error handling
         
