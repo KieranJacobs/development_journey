@@ -82,12 +82,13 @@ def add_book():
     author = input("Author: ")
     genre = input("Genre: ")
     read_input = input("Read? (True/False): ")
+    actual_boolean = read_input.lower() == 'true'
 
     new_book = {
         "bookTitle" : title,
         "author" : author,
         "genre" : genre,
-        "status" : read_input
+        "status" : actual_boolean
     }
 
     library.append(new_book)
@@ -140,4 +141,4 @@ while True:
     
     else:
         print("INVALID OPTION CHOSEN!")
-        break
+        
