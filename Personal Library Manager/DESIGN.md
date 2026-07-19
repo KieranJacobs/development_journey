@@ -15,6 +15,7 @@ Each book should store:
 - a place to store user input()
 - data variables to call in menu options?
 - loop variables
+- functions (NEW)
 
 # Data Structures
 
