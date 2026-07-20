@@ -7,6 +7,7 @@ SAVE_FILE = Path("projects/projects_list.json")
 projects_list = []
 
 def menu_function():
+    print()
     print("====== //                         // ======")
     print("====== / PROJECT MANAGEMENT SYSTEM / ======")
     print("         1. Create a Project               ")
@@ -63,17 +64,18 @@ def add_task():
     for project in projects_list:
         if project["title"] == selectProject:
             found = True
-            new_Task = input(f"Write a basic task for {project}: ")
+            new_Task = input("Write a basic task for the selected project: ")
             
-            task = [
-                new_Task
-            ]
+            task = {
+                "title": new_Task,
+                "completed": False
+            }
 
-            projects_list.append(task)
+            project["tasks"].append(task)
             print(f"\nTask '{new_Task}' has been successfully added to Project.")
             save_projects()
-    if not found:
-        print("INVALID PROJECT TITLE!\n")
+        if not found:
+            print("INVALID PROJECT TITLE!\n")
 
 def view_projects():
     print()
