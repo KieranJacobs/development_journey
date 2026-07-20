@@ -1,11 +1,16 @@
 # Version 1
 
-- [ ] Python CLI
-- [ ] Create Projects
+- [x] Python CLI
+- [x] Create Projects
+- [x] View all existing projects
+
+---
+
+# Version 1.1
+
 - [ ] Add Tasks
-- [ ] Mark as Complete
-- [ ] Save to JSON
-- [ ] Supporting features?
+- [ ] Save Projects
+- [ ] Load Projects
 
 ---
 
