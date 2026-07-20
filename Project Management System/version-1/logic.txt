@@ -2,6 +2,7 @@
 
 # main.py // version-1
 declare json module
+declare pathlib module
 
 define CLI_menu.FUNCTION:
     PRINT border
