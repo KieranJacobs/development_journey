@@ -1,0 +1,54 @@
+[LOGIC - How I expect the program to function and work]
+
+# main.py // version-1
+declare json module
+
+define CLI_menu.FUNCTION:
+    PRINT border
+    PRINT Title
+    PRINT Items/Options
+    PRINT border
+    PRINT [ ]
+
+define projects.FUNCTION:
+        STORE user_input using conditions (str, int, bool, bool)
+        TAKE STORED user_input format and CREATE projects.JSON file with user_input
+        PRINT JSON file information as confirmation
+
+define add_tasks.FUNCTION:
+        IF projects.JSON EXISTS then:
+            STORE user_input using conditions (str, int, bool, bool)
+            TAKE STORED user_input format and APPEND projects.JSON file with user_input
+            PRINT JSON file information as confirmation
+        ELSE:
+            PRINT file creation response (refer projects.FUNCTION)
+            EXECUTE projects.function()
+            PRINT JSON file information as confirmation
+
+define marked.FUNCTION:
+        IF projects.JSON EXISTS then:
+            LOAD projects.JSON
+            PRINT projects.JSON list
+            IF project_input is OPTION then:
+                APPEND projects.JSON['project'].asMarked
+                SAVE project.JSON
+                PRINT projects.JSON
+
+WHILE Loop TRUE:
+
+    CLI_menu.FUNCTION()
+
+    IF user_input is OPTION then:
+        projects.FUNCTION()
+
+    ELSE IF user_input is OPTION then:
+        add_tasks.FUNCTION()
+
+    ELSE IF user_input is OPTION then:
+        marked.FUNCTION()
+
+    ELSE IF user_input is OPTION then:
+        STOP main.py
+    
+    ELSE:
+        PRINT Error Handling Response
