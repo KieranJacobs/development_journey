@@ -3,7 +3,8 @@
 # main.py // version-1
 declare json module
 declare pathlib module
-declare dataclasses module
+declare dataclasses module: dataclass, field, asdict
+declare datetime module
 
 define CLI_menu.FUNCTION:
     PRINT border
