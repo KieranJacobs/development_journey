@@ -8,16 +8,21 @@
 
 # Version 1.1
 
-- [ ] Add Tasks
-- [ ] Save Projects
-- [ ] Load Projects
+- [x] Add Tasks
+- [x] Save Projects
+- [x] Load Projects
+
+---
+
+# Version 1.2
+
+- [x] View all Projects
+- [x] update status
 
 ---
 
 # Version 2
 
-- [ ] Task Priorities
-- [ ] Due Dates
 - [ ] Search
 - [ ] Filtering and Sorting
 - [ ] Supporting Features?
