@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Project1",
+        "tasks": [],
+        "status": "Not Started"
+    },
+    {
+        "title": "Project2",
+        "tasks": [],
+        "status": "Not Started"
+    },
+    {
+        "title": "Project3",
+        "tasks": [],
+        "status": "Not Started"
+    }
+]

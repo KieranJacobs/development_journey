@@ -6,7 +6,7 @@
 
 ---
 
-# Version 1.1
+## Version 1.1
 
 - [x] Add Tasks
 - [x] Save Projects
@@ -14,22 +14,28 @@
 
 ---
 
-# Version 1.2
+## Version 1.2
 
 - [x] View all Projects
 - [x] update status
 
 ---
 
-# Version 2
+## Version 1.3
 
-- [ ] Search
+- [x] Improve Usability
+- [x] Edit & Delete Projects
+
+---
+
+## Version 2
+
 - [ ] Filtering and Sorting
 - [ ] Supporting Features?
 
 ---
 
-# Version 3
+## Version 3
 
 - [ ] SQLite
 - [ ] Statistics
@@ -39,35 +45,35 @@
 
 ---
 
-# Version 4
+## Version 4
 
 - [ ] Flask API
 - [ ] Supporting Features?
 
 ---
 
-# Version 5
+## Version 5
 
 - [ ] JavaScript Frontend
 - [ ] Supporting Features?
 
 ---
 
-# Version 6
+## Version 6
 
 - [ ] Docker
 - [ ] Supporting Features?
 
 ---
 
-# Version 7
+## Version 7
 
 - [ ] non-Windows OS deployment
 - [ ] Supporting Features?
 
 ---
 
-# Version 8
+## Version 8
 
 - [ ] AI Task Assistance
 - [ ] Supporting Features?
