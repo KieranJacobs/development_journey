@@ -30,10 +30,14 @@
 
 ## Version 2
 
-- [ ] Filtering and Sorting
-- [ ] Supporting Features?
+- [x] expanding add_tasks(priority, validation, start/due dates)
 
 ---
+
+## Version 2.1
+
+- [ ] refactoring add_tasks(make due dates and prioritization a separate function to call upon)
+- [ ] make view_projects()
 
 ## Version 3
 
