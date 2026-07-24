@@ -44,8 +44,15 @@
 
 ## Version 2.2
 
-- [ ] refactoring delete_projects()
-- [ ] upgrading create_projects()
+- [x] refactoring delete_projects()
+- [x] upgrading create_projects()
+
+---
+
+## Version 2.3
+
+- [ ] implementing modularization for functions
+- [ ] adding module folders categorized by their usage
 
 ## Version 3
 
