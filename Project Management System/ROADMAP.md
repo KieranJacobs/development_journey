@@ -37,7 +37,7 @@
 ## Version 2.1
 
 - [ ] refactoring add_tasks(make due dates and prioritization a separate function to call upon)
-- [ ] make view_projects()
+- [ ] update view_projects()
 
 ## Version 3
 

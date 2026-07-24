@@ -68,8 +68,7 @@ def edit_projects():
             found = True
             print(f"[CURRENT] Project Title: {project['title']}.")
             new_Title = input("Write a new name for Selected project: ")
-            newTitle = {"title": new_Title}
-            project["title"] = newTitle
+            project["title"] = new_Title
             print(f"\nNew Project Title '{new_Title}' has successfully replaced previous Title.")
             save_projects()
     if not found:
