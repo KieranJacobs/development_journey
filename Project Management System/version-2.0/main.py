@@ -1,8 +1,8 @@
 # main.py\version-2.0\
 
+import datetime
 import json
 from pathlib import Path
-import datetime
 
 SAVE_FILE = Path("projects/projects_list.json")
 projects_list = []
@@ -137,13 +137,13 @@ def add_task():
             while True:
                 try:
                     due_date = input("Enter the deadline for this task (DD-MM-YYYY): ")
-                    parsed_date = datetime.datetime.strptime(due_date, "%d-%m-%Y")
+                    parsed_date = datetime.datetime.strptime(due_date, "%d-%m-%Y").replace(tzinfo=datetime.timezone.utc)
                     string_date = parsed_date.strftime("%d-%m-%Y")
                     break
                 except ValueError:
                     print("\nERROR: INVALID FORMAT! PLEASE USE DD-MM-YYYY!")
 
-            raw_time = datetime.datetime.now()
+            raw_time = datetime.datetime.now(datetime.timezone.utc)
             formatted_time = raw_time.strftime("%d-%m-%Y")
 
             task = {
@@ -170,10 +170,8 @@ def view_projects():
         projects = json.load(file)
         for project in projects:
             tasks = project["tasks"]
-            count = 0
             print(f"Title: {project['title']}")
-            for task in tasks:
-                count += 1
+            for count, task in enumerate(tasks, start=1):
                 print(f"{count}. Task: {task['title']}")
             
             print(f"Status?: {project['status']}")
