@@ -51,8 +51,10 @@
 
 ## Version 2.3
 
-- [ ] implementing modularization for functions
-- [ ] adding module folders categorized by their usage
+- [x] implementing modularization for functions
+- [x] adding module folders categorized by their usage
+
+---
 
 ## Version 3
 
