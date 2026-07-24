@@ -8,7 +8,9 @@ def menu_function():
     print("         4. Change Project Status          ")
     print("         5. Delete a Project               ")
     print("         6. View all Projects              ")
-    print("         7. Close Program                  ")
+    print("         7. Toggle Task Completion         ")
+    print("         8. Delete a Task                  ")
+    print("         9. Close Program                  ")
     print("====== //                         // ======")
     print()
 

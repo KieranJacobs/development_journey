@@ -1,8 +1,7 @@
 # main.py\version-2.3\
 
-import project_ops  # noqa: I001
+import project_ops
 import ui_helpers
-
 
 while True:
     ui_helpers.menu_function()
@@ -27,9 +26,14 @@ while True:
         project_ops.view_projects()
     
     elif user_input == "7":
+        project_ops.toggle_task_completion()
+
+    elif user_input == "8":
+        project_ops.delete_task()
+        
+    elif user_input == "9":
+        print("\nClosing Program.")
         break
 
     else:
-        print()
-        print("INVALID OPTION CHOSEN!")
-        print()
+        print("\nINVALID OPTION CHOSEN!\n")

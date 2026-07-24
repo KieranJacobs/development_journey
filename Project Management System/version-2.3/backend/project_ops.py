@@ -59,9 +59,21 @@ def edit_projects():
         return
     
     print(f"\n[CURRENT] Project Title: {selected_project['title']}")
-    new_Title = input("Write a new name for the selected project: ").strip()
-    selected_project["title"] = new_Title
-    print(f"\nNew Project Title '{new_Title}' has successfully replaced the previous Project Title.")
+    while True:
+        new_title = input("Write a new name for the selected project: ").strip()
+        if not new_title:
+            print("ERROR: PROJECT NAME CANNOT BE EMPTY. PLEASE ENTER A NAME. \n")
+            continue
+        if new_title.lower() == selected_project['title'].lower():
+            print("ERROR: THAT IS ALREADY THE CURRENT PROJECT NAME. PLEASE CHOOSE A DIFFERENT NAME.\n")
+            continue
+        is_duplicate = any(project['title'].lower() == new_title.lower() for project in data_manager.projects_list)
+        if is_duplicate:
+            print(f"ERROR: A PROJECT NAMED '{new_title}' ALREADY EXISTS. PLEASE CHOOSE A DIFFERENT PROJECT NAME. \n")
+            continue
+        break
+    selected_project["title"] = new_title
+    print(f"\nNew Project Title '{new_title}' has successfully replaced the previous Project Title.")
     data_manager.save_projects()
 
 def delete_projects():
@@ -83,17 +95,17 @@ def add_task():
         return
     
     print(f"\n[CURRENT] Project Selected: {selected_project['title']}")
-    new_Task = input("Write a basic task for the selected project: ")
-    ui_helpers.status_menu()
+    new_task = input("Write a basic task for the selected project: ")
+    ui_helpers.priority_menu()
     while True:
-        new_prio = input("Select a Priority level for this task(1,2,3): ")
-        if new_prio == "1":
+        new_priority = input("Select a Priority level for this task(1,2,3): ")
+        if new_priority == "1":
             prio = "High"
             break
-        elif new_prio == "2":
+        elif new_priority == "2":
             prio = "Moderate"
             break
-        elif new_prio == "3":
+        elif new_priority == "3":
             prio = "Low"
             break
         else:
@@ -112,7 +124,7 @@ def add_task():
     formatted_time = raw_time.strftime("%d-%m-%Y")
 
     task = {
-        "title": new_Task,
+        "title": new_task,
         "priority": prio,
         "completed": False,
         "created": formatted_time,
@@ -120,7 +132,7 @@ def add_task():
     }
 
     selected_project["tasks"].append(task)
-    print(f"\nTask '{new_Task}' has been successfully added to Project '{selected_project['title']}'")
+    print(f"\nTask '{new_task}' has been successfully added to Project '{selected_project['title']}'")
     data_manager.save_projects()
 
 def view_projects():
@@ -179,3 +191,79 @@ def change_status():
     
     print("\nProject status updated successfully.")
     data_manager.save_projects()
+
+def toggle_task_completion():
+    data_manager.load_projects()
+    ui_helpers.header("TOGGLE: TASK COMPLETION")
+
+    selected_project = get_project_selection()
+    if selected_project is None:
+        return
+
+    tasks = selected_project.get("tasks", [])
+    if not tasks:
+        print(f"    -> [No tasks assigned to '{selected_project['title']}' yet]\n")
+        return
+
+    print(f"\nTasks for '{selected_project['title']}':")
+    for count, task in enumerate(tasks, start=1):
+        checkbox = "[X]" if task.get("completed") else "[ ]"
+        print(f" {count}. {checkbox} {task['title']}")
+    print()
+
+    while True:
+        user_input = input("Select a Task Number to toggle (or 'q' to cancel): ")
+        if user_input.lower() == 'q':
+            print("\nAction Cancelled.")
+            return
+
+        try:
+            task_index = int(user_input) - 1
+            if 0 <= task_index < len(tasks):
+                selected_task = tasks[task_index]
+
+                selected_task["completed"] = not selected_task.get("completed", False)
+                status_text = "Completed" if selected_task["completed"] else "Incomplete"
+
+                print(f"\n SUCCESS: Task '{selected_task['title']}' marked as {status_text}.")
+                data_manager.save_projects()
+                break
+            else:
+                print("ERROR: THAT NUMBER IS OUT OF RANGE. PLEASE TRY AGAIN.")
+        except ValueError:
+            print("ERROR: INVALID INPUT. PLEASE ENTER A NUMBER.")
+
+def delete_task():
+    data_manager.load_projects()
+    ui_helpers.header("DELETE: A TASK")
+
+    selected_project = get_project_selection()
+    if selected_project is None:
+        return
+    tasks = selected_project.get("tasks", [])
+    if not tasks:
+        print(f"    -> [No tasks assigned to '{selected_project['title']}' yet]\n")
+        return
+
+    print(f"\nTasks for '{selected_project['title']}':")
+    for count, task in enumerate(tasks, start=1):
+        print(f"    {count}, {task['title']}")
+    print()
+
+    while True:
+        user_input = input("Select a Task Number to delete (or 'q' to cancel): ")
+        if user_input.lower() == 'q':
+            print("\nAction Cancelled.")
+            return
+
+        try:
+            task_index = int(user_input) - 1
+            if 0 <= task_index < len(tasks):
+                deleted_task = tasks.pop(task_index)
+                print(f"\nSUCCESS: Deleted task '{deleted_task['title']}' from project '{selected_project['title']}'.")
+                data_manager.save_projects()
+                break
+            else:
+                print("ERROR: THAT NUMBER IS OUT OF RANGE. PLEASE TRY AGAIN.")
+        except ValueError:
+            print("ERROR: INVALID INPUT. PLEASE ENTER A NUMBER.")
