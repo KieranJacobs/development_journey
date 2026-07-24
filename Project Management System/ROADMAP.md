@@ -56,6 +56,14 @@
 
 ---
 
+## Version 2.4
+
+- [x] update variable names
+- [x] duplicate validation in edit_projects
+- [x] task management
+
+---
+
 ## Version 3
 
 - [ ] SQLite
