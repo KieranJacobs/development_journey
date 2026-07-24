@@ -36,8 +36,16 @@
 
 ## Version 2.1
 
-- [ ] refactoring add_tasks(make due dates and prioritization a separate function to call upon)
-- [ ] update view_projects()
+- [x] refactoring add_tasks(improve the function using a selection function to get rid of the fluff)
+- [x] update view_projects()
+- [x] add a global selection function
+
+---
+
+## Version 2.2
+
+- [ ] refactoring delete_projects()
+- [ ] upgrading create_projects()
 
 ## Version 3
 
