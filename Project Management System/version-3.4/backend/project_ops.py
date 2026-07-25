@@ -1,4 +1,4 @@
-# project_ops\version-3.1
+# project_ops\version-3.4
 
 import data_manager  # noqa: I001
 import datetime
@@ -75,29 +75,48 @@ def create_projects():
     print(f"\nProject '{pname}' created successfully.")
 
 def edit_projects():
-    data_manager.load_projects()
     ui_helpers.header("EDIT: AN EXISTING PROJECT")
+    
     selected_project = get_project_selection()
     if selected_project is None:
         return
     
     print(f"\n[CURRENT] Project Title: {selected_project['title']}")
+    project_id = selected_project['id']
+    
+    # validation loop until provided a valid name
     while True:
         new_title = input("Write a new name for the selected project: ").strip()
+        
         if not new_title:
-            print("ERROR: PROJECT NAME CANNOT BE EMPTY. PLEASE ENTER A NAME. \n")
+            print("ERROR: PROJECT NAME CANNOT BE EMPTY. PLEASE ENTER A NAME.\n")
             continue
+            
         if new_title.lower() == selected_project['title'].lower():
-            print("ERROR: THAT IS ALREADY THE CURRENT PROJECT NAME. PLEASE CHOOSE A DIFFERENT NAME.\n")
+            print("ERROR: THAT IS ALREADY THE CURRENT PROJECT NAME. PLEASE CHOOSE A NEW NAME.\n")
             continue
-        is_duplicate = any(project['title'].lower() == new_title.lower() for project in data_manager.projects_list)
-        if is_duplicate:
-            print(f"ERROR: A PROJECT NAMED '{new_title}' ALREADY EXISTS. PLEASE CHOOSE A DIFFERENT PROJECT NAME. \n")
+            
+        # Open connection inside the loop so we can check the database for duplicates
+        conn = data_manager.get_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT id FROM projects WHERE LOWER(title) = LOWER(?)", (new_title,))
+        existing_project = cursor.fetchone()
+        
+        if existing_project:
+            print(f"ERROR: A PROJECT NAMED '{new_title}' ALREADY EXISTS. PLEASE CHOOSE A DIFFERENT NAME.\n")
+            conn.close() 
             continue
-        break
-    selected_project["title"] = new_title
+            
+        break 
+        
+    # If the loop breaks, the name is valid. Execute the UPDATE.
+    cursor.execute("UPDATE projects SET title = ? WHERE id = ?", (new_title, project_id))
+    
+    conn.commit()
+    conn.close()
+    
     print(f"\nNew Project Title '{new_title}' has successfully replaced the previous Project Title.")
-    data_manager.save_projects()
 
 def delete_projects():
     ui_helpers.header("DELETE: AN EXISTING PROJECT")
@@ -121,7 +140,6 @@ def delete_projects():
 
 
 def add_task():
-    data_manager.load_projects()
     ui_helpers.header("ADD: A NEW TASK TO A PROJECT")
     selected_project = get_project_selection()
     if selected_project is None:
@@ -129,21 +147,9 @@ def add_task():
     
     print(f"\n[CURRENT] Project Selected: {selected_project['title']}")
     new_task = input("Write a basic task for the selected project: ")
-    ui_helpers.priority_menu()
-    while True:
-        new_priority = input("Select a Priority level for this task(1,2,3): ")
-        if new_priority == "1":
-            prio = "High"
-            break
-        elif new_priority == "2":
-            prio = "Moderate"
-            break
-        elif new_priority == "3":
-            prio = "Low"
-            break
-        else:
-            print("INVALID PRIORITY LEVEL SELECTED!")
-                
+    
+    
+    priority = ui_helpers.get_valid_priority()
     while True:
         try:
             due_date = input("Enter the deadline for this task (DD-MM-YYYY): ")
@@ -152,21 +158,20 @@ def add_task():
             break
         except ValueError:
             print("\nERROR: INVALID FORMAT! PLEASE USE DD-MM-YYYY!")
-
     raw_time = datetime.datetime.now(datetime.timezone.utc)
     formatted_time = raw_time.strftime("%d-%m-%Y")
-
-    task = {
-        "title": new_task,
-        "priority": prio,
-        "completed": False,
-        "created": formatted_time,
-        "due date": string_date
-    }
-
-    selected_project["tasks"].append(task)
+    # Connect to the database and INSERT the task with the linked project_id
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        INSERT INTO tasks (project_id, title, priority, due_date, created, completed)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (selected_project['id'], new_task, priority, string_date, formatted_time, 0))
+    
+    conn.commit()
+    conn.close()
     print(f"\nTask '{new_task}' has been successfully added to Project '{selected_project['title']}'")
-    data_manager.save_projects()
 
 def view_projects():
     ui_helpers.header("VIEW: ALL EXISTING PROJECTS")
@@ -208,10 +213,8 @@ def view_projects():
 
 def change_status():
     ui_helpers.header("EDIT: THE STATUS OF A PROJECT")
-    data_manager.load_projects()
 
     selected_project = get_project_selection()
-
     if selected_project is None:
         return
     
@@ -221,95 +224,226 @@ def change_status():
     print(f"Current Status: {selected_project['status']}")
     print("================//=================")
     print()
-    print()
+    
     ui_helpers.status_menu()
 
-    while True:
-        new_status = input("Enter a new status for the project: ")
-        if new_status == "1":
-            selected_project["status"] = "In Progress"
-            break
-        elif new_status == "2":
-            selected_project["status"] = "Completed"
-            break
-        else:
-            print("INCORRECT STATUS CHANGE OPTION!")
+    new_status = ui_helpers.get_valid_status()
+    
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute(
+        "UPDATE projects SET status = ? WHERE id = ?", 
+        (new_status, selected_project['id'])
+    )
+    
+    conn.commit()
+    conn.close()
     
     print("\nProject status updated successfully.")
-    data_manager.save_projects()
 
 def toggle_task_completion():
-    data_manager.load_projects()
     ui_helpers.header("TOGGLE: TASK COMPLETION")
-
+    
     selected_project = get_project_selection()
     if selected_project is None:
         return
-
-    tasks = selected_project.get("tasks", [])
+    
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+    
+    # Query only the tasks that belong to this specific project
+    cursor.execute("SELECT * FROM tasks WHERE project_id = ?", (selected_project['id'],))
+    tasks = cursor.fetchall()
+    
     if not tasks:
-        print(f"    -> [No tasks assigned to '{selected_project['title']}' yet]\n")
+        print(f"  -> [No tasks assigned to '{selected_project['title']}' yet]\n")
+        conn.close()
         return
 
     print(f"\nTasks for '{selected_project['title']}':")
     for count, task in enumerate(tasks, start=1):
-        checkbox = "[X]" if task.get("completed") else "[ ]"
-        print(f" {count}. {checkbox} {task['title']}")
+        checkbox = "[X]" if task['completed'] == 1 else "[ ]"
+        print(f"  {count}. {checkbox} {task['title']}")
     print()
 
     while True:
         user_input = input("Select a Task Number to toggle (or 'q' to cancel): ")
         if user_input.lower() == 'q':
             print("\nAction Cancelled.")
-            return
+            break
 
         try:
             task_index = int(user_input) - 1
             if 0 <= task_index < len(tasks):
                 selected_task = tasks[task_index]
-
-                selected_task["completed"] = not selected_task.get("completed", False)
-                status_text = "Completed" if selected_task["completed"] else "Incomplete"
-
-                print(f"\n SUCCESS: Task '{selected_task['title']}' marked as {status_text}.")
-                data_manager.save_projects()
+                
+                # Flip the integer: If 1 -> 0, if 0 -> 1
+                new_status = 0 if selected_task['completed'] == 1 else 1
+                
+                # UPDATE the specific task by its unique database ID
+                cursor.execute("UPDATE tasks SET completed = ? WHERE id = ?", (new_status, selected_task['id']))
+                conn.commit()
+                
+                status_text = "Completed" if new_status == 1 else "Incomplete"
+                print(f"\nSUCCESS: Task '{selected_task['title']}' marked as {status_text}.")
                 break
             else:
                 print("ERROR: THAT NUMBER IS OUT OF RANGE. PLEASE TRY AGAIN.")
         except ValueError:
             print("ERROR: INVALID INPUT. PLEASE ENTER A NUMBER.")
+            
+    conn.close()
 
 def delete_task():
-    data_manager.load_projects()
     ui_helpers.header("DELETE: A TASK")
-
+    
     selected_project = get_project_selection()
     if selected_project is None:
         return
-    tasks = selected_project.get("tasks", [])
+    
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM tasks WHERE project_id = ?", (selected_project['id'],))
+    tasks = cursor.fetchall()
+    
     if not tasks:
-        print(f"    -> [No tasks assigned to '{selected_project['title']}' yet]\n")
+        print(f"  -> [No tasks assigned to '{selected_project['title']}' yet]\n")
+        conn.close()
         return
 
     print(f"\nTasks for '{selected_project['title']}':")
     for count, task in enumerate(tasks, start=1):
-        print(f"    {count}, {task['title']}")
+        print(f"  {count}. {task['title']}")
     print()
 
     while True:
         user_input = input("Select a Task Number to delete (or 'q' to cancel): ")
         if user_input.lower() == 'q':
             print("\nAction Cancelled.")
-            return
+            break
 
         try:
             task_index = int(user_input) - 1
             if 0 <= task_index < len(tasks):
-                deleted_task = tasks.pop(task_index)
-                print(f"\nSUCCESS: Deleted task '{deleted_task['title']}' from project '{selected_project['title']}'.")
-                data_manager.save_projects()
+                selected_task = tasks[task_index]
+                
+                # DELETE the specific task by its unique database ID
+                cursor.execute("DELETE FROM tasks WHERE id = ?", (selected_task['id'],))
+                conn.commit()
+                
+                print(f"\nSUCCESS: Deleted task '{selected_task['title']}' from project '{selected_project['title']}'.")
                 break
             else:
                 print("ERROR: THAT NUMBER IS OUT OF RANGE. PLEASE TRY AGAIN.")
         except ValueError:
             print("ERROR: INVALID INPUT. PLEASE ENTER A NUMBER.")
+            
+    conn.close()
+
+def project_statistics():
+    ui_helpers.header("PROJECT & TASK STATISTICS")
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+
+    # Count total projects
+    cursor.execute("SELECT COUNT(id) FROM projects")
+    total_projects = cursor.fetchone()[0] # [0] pulls the number out of the tuple
+
+    # Count total tasks
+    cursor.execute("SELECT COUNT(id) FROM tasks")
+    total_tasks = cursor.fetchone()[0]
+
+    # Count completed tasks using a WHERE filter
+    cursor.execute("SELECT COUNT(id) FROM tasks WHERE completed = 1")
+    completed_tasks = cursor.fetchone()[0]
+
+    remaining = total_tasks - completed_tasks
+    
+    # Avoid dividing by zero if there are no tasks yet
+    completion_rate = (completed_tasks / total_tasks * 100) if total_tasks > 0 else 0
+
+    print(f"  Total Projects:  {total_projects}")
+    print(f"  Total Tasks:     {total_tasks}")
+    print(f"  Tasks Completed: {completed_tasks}")
+    print(f"  Tasks Remaining: {remaining}")
+    print(f"  Completion Rate: {completion_rate:.0f}%")
+    print()
+    
+    conn.close()
+
+def search_projects():
+    ui_helpers.header("SEARCH PROJECTS")
+    search_term = input("Enter a partial name to search for: ").strip()
+    
+    if not search_term:
+        print("Search cancelled.\n")
+        return
+
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+    
+    query_term = f"%{search_term}%" 
+    
+    # LIKE is case-insensitive in SQLite by default
+    cursor.execute("SELECT * FROM projects WHERE title LIKE ?", (query_term,))
+    results = cursor.fetchall()
+    
+    if not results:
+        print(f"\nNo projects found matching '{search_term}'.")
+    else:
+        print(f"\n--- Search Results for '{search_term}' ---")
+        for project in results:
+            print(f" - {project['title']} (Status: {project['status']})")
+            
+    conn.close()
+
+def view_high_priority_tasks():
+    ui_helpers.header("VIEW: HIGH PRIORITY TASKS")
+    selected_project = get_project_selection()
+    if selected_project is None:
+        return
+        
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+    
+    # Filter using WHERE and sort using ORDER BY
+    cursor.execute("""
+        SELECT * FROM tasks 
+        WHERE project_id = ? AND priority = 'High' AND completed = 0
+        ORDER BY created ASC
+    """, (selected_project['id'],))
+    
+    tasks = cursor.fetchall()
+    
+    if not tasks:
+        print("\nNo pending High Priority tasks for this project! Great job.")
+    else:
+        print(f"\n--- HIGH PRIORITY TASKS FOR '{selected_project['title']}' ---")
+        for count, task in enumerate(tasks, start=1):
+            print(f" {count}. {task['title']} (Due: {task['due_date']})")
+            
+    conn.close()
+
+def view_completed_tasks():
+    ui_helpers.header("VIEW: COMPLETED TASKS")
+    selected_project = get_project_selection()
+    if selected_project is None:
+        return
+        
+    conn = data_manager.get_connection()
+    cursor = conn.cursor()
+    
+    # SQLite uses 1 for True
+    cursor.execute("SELECT * FROM tasks WHERE project_id = ? AND completed = 1", (selected_project['id'],))
+    tasks = cursor.fetchall()
+    
+    if not tasks:
+        print("\nNo completed tasks for this project yet.")
+    else:
+        print(f"\n--- COMPLETED TASKS FOR '{selected_project['title']}' ---")
+        for count, task in enumerate(tasks, start=1):
+            print(f" ✓ {task['title']}")
+            
+    conn.close()

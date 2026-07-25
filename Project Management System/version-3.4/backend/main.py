@@ -1,4 +1,4 @@
-# main.py\version-3.3\
+# main.py\version-3.4\
 
 import project_ops
 import ui_helpers
@@ -32,6 +32,18 @@ while True:
         project_ops.delete_task()
         
     elif user_input == "9":
+        project_ops.project_statistics()
+    
+    elif user_input == "10":
+        project_ops.search_projects()
+
+    elif user_input == "11":
+        project_ops.view_high_priority_tasks()
+
+    elif user_input == "12":
+        project_ops.view_completed_tasks()
+
+    elif user_input == "13":
         print("\nClosing Program.")
         break
 

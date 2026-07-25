@@ -99,9 +99,17 @@
 
 ## Version 3.4
 
-- [ ] Refactor priority and status loops into ui_helpers.py
-- [ ] Sorting
-- [ ] Filtration
+- [x] Refactor priority and status loops into ui_helpers.py
+- [x] Sorting
+- [x] Filtration
+
+---
+
+## Version 3.5
+
+- [ ] refactoring options to be grouped
+- [ ] testing
+- [ ] refactoring other critical elements
 
 ## Version 4
 

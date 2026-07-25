@@ -1,4 +1,4 @@
-# data_manager\version-2.3
+# data_manager\version-3.0
 
 import sqlite3
 from pathlib import Path

@@ -1,0 +1,51 @@
+The Connection and the Cursor
+    In data_manager.py exists a function called [get_connection()]
+    When the Python script wants to talk to the database it will use this function
+
+- conn = data_manager.get_connection(): This is what will talk to the project_manager.database
+- cursor = conn.cursor(): This is middle-man that executes all incoming requests to the database.
+
+Question Marks(?)
+    In the create_projects() function, exists a command; cursor.execute("SELECT id FROM projects WHERE LOWER(title) = LOWER(?)", (pname,))
+    Using ? is called a Parameterized Query:
+
+Scenario A; The Syntax Crash
+A user names their Project: Bob's Project.
+If we used an f-string to print the project name, Python would send this text to the database:
+    SELECT id FROM projects WHERE title = 'Bob's Project'
+Because there is an apostrophe in the project title, the database thinks the string ended early,
+and gets confused by the "s Project", and crashes the program spitting out an error. The ? parameter
+automatically handles apostrophes and special characters so the database doesnt crash when generating the project.
+
+Scenario B; SQL Injection
+A malicious user enters this as their project name:
+Project A'; DROP TABLE projects; --
+If we used an f-string, we would accidentally send a command to the database telling it to delete our entire projects table.
+By using ?, Python explicitly tells the database: "Treat whatever the user typed as plain text, NOT as executable code."
+
+The Tuple Parameters (pname,) and (pname, "Not Started")
+When using ? placeholders, you must provide the actual data you want to inject into those placeholders.
+You do this by passing a Tuple (a collection of items in parentheses) as the second argument to cursor.execute().
+    Multiple Parameters:
+    example:
+    cursor.execute("INSERT INTO projects (title, status) VALUES (?, ?)", (pname, "Not Started"))
+    The database sees two question marks. It looks at the tuple and assigns them in order:
+        1. The first ? becomes pname.
+        2. The second ? "Not Started".
+    
+    The Weird Single Parameter:
+    example:
+    cursor.execute("SELECT ... WHERE LOWER(title) = LOWER(?)", (pname,))
+    The reason behind the random comma after pname; In Python, if we just put a variable in parentheses
+    (pname), Python thinks we are just grouping math operations. By adding the trailing comma (pname,),
+    we are explicitly telling Python: "This is a tuple containing exactly one item." The database expects a tuple,
+    so the comma is required.
+
+Commit and Close
+- conn.commit()
+- conn.close()
+When the cursor inserts the new project into the database, it actually does it in a temporary staging area.
+conn.commit() tells the database to permanently save those changes to the hard drive. If we forget to commit,
+the data disappears the moment the program closes.
+conn.close() hangs up the phone line. Databases can only handle so many simultaneous connections, so it is a 
+strict rule to always close the connection when the function is finished.
