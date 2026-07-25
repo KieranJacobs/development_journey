@@ -114,7 +114,7 @@
 
 ## Version 3.6
 
-- [ ] Data Exporting
+- [x] Data Exporting
 
 ---
 
