@@ -66,11 +66,17 @@
 
 ## Version 3
 
-- [ ] SQLite
-- [ ] Statistics
-- [ ] Reports
-- [ ] Manage Projects
-- [ ] Supporting Features?
+- [x] SQLite
+- [x] Convert create_project() to accept SQL
+- [x] Convert get_project_select() to accept SQL queries
+- [x] Rename projects folder to data
+
+---
+
+## Version 3.1
+
+- [ ] Convert view_projects()
+- [ ] Convert delete_projcts()
 
 ---
 
