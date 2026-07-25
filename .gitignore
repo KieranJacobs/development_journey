@@ -1,3 +1,11 @@
 Fundamentals Practice/
 Student Grade Tracker/
 ImportantPythonInfo/
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+*.db
+*.sqlite3

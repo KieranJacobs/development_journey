@@ -89,11 +89,19 @@
 
 ## Version 3.3
 
-- [ ] Convert add_task()
-- [ ] Convert toggle_task_completion()
-- [ ] Convert delete_task()
+- [x] Convert add_task()
+- [x] Convert toggle_task_completion()
+- [x] Convert delete_task()
+- [x] testing
+- [x] update .gitignore
 
 ---
+
+## Version 3.4
+
+- [ ] Refactor priority and status loops into ui_helpers.py
+- [ ] Sorting
+- [ ] Filtration
 
 ## Version 4
 
