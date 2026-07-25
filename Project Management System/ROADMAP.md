@@ -82,8 +82,16 @@
 
 ## Version 3.2
 
-- [ ] Statistics
-- [ ] Reports
+- [x] Convert edit_projects()
+- [x] Convert change_status()
+
+---
+
+## Version 3.3
+
+- [ ] Convert add_task()
+- [ ] Convert toggle_task_completion()
+- [ ] Convert delete_task()
 
 ---
 
