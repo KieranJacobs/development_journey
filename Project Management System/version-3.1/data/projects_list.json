@@ -1,0 +1,25 @@
+[
+    {
+        "title": "Project1",
+        "tasks": [
+            {
+                "title": "Write Readme",
+                "priority": "Moderate",
+                "completed": false,
+                "created": "24-07-2026",
+                "due date": "31-07-2026"
+            }
+        ],
+        "status": "Not Started"
+    },
+    {
+        "title": "Project2",
+        "tasks": [],
+        "status": "Not Started"
+    },
+    {
+        "title": "Project3",
+        "tasks": [],
+        "status": "Not Started"
+    }
+]

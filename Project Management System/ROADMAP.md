@@ -75,8 +75,15 @@
 
 ## Version 3.1
 
-- [ ] Convert view_projects()
-- [ ] Convert delete_projcts()
+- [x] Convert view_projects()
+- [x] Convert delete_projcts()
+
+---
+
+## Version 3.2
+
+- [ ] Statistics
+- [ ] Reports
 
 ---
 
