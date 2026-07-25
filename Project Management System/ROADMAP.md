@@ -107,9 +107,16 @@
 
 ## Version 3.5
 
-- [ ] refactoring options to be grouped
-- [ ] testing
-- [ ] refactoring other critical elements
+- [x] refactoring options to be grouped
+- [x] testing
+
+---
+
+## Version 3.6
+
+- [ ] Data Exporting
+
+---
 
 ## Version 4
 
