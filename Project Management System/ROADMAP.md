@@ -120,8 +120,20 @@
 
 ## Version 4
 
-- [ ] Flask API
-- [ ] Supporting Features?
+- [x] Flask API
+- [x] Web Dashboard
+- [x] Dedicated Project Pages
+- [x] Instant Status Updates
+- [x] Task Creation
+- [x] Task Completion Toggle
+- [x] Safe Project Deletion
+- [x] On-Page Error Alerts
+
+---
+
+## Version 4.1
+
+- [ ] Delete Task button
 
 ---
 
