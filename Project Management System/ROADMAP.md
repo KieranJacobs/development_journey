@@ -133,7 +133,9 @@
 
 ## Version 4.1
 
-- [ ] Delete Task button
+- [x] Delete Task button
+- [x] Statistics Dashboard
+- [x] CSV Export
 
 ---
 
