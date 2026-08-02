@@ -155,9 +155,19 @@
 
 ## Version 4.4
 
-- [ ] Dashboard search bar
-- [ ] Standardize Error messages
-- [ ] UI polish
+- [x] Dashboard search bar
+- [x] Standardize Error messages
+- [x] UI polish
+
+---
+
+## Version 4.5
+
+- [ ] Sorting / Filter interaction for tasks
+- [ ] database restructure
+- [ ] file attachment implementation
+
+---
 
 ## Version 5
 
