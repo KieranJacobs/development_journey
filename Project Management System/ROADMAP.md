@@ -148,10 +148,16 @@
 
 ## Version 4.3
 
-- [ ] update date format & chronological sorting issue
-- [ ] fixing error message posting in app.py
+- [x] update date format & chronological sorting issue
+- [x] fixing error message posting in app.py
 
 ---
+
+## Version 4.4
+
+- [ ] Dashboard search bar
+- [ ] Standardize Error messages
+- [ ] UI polish
 
 ## Version 5
 

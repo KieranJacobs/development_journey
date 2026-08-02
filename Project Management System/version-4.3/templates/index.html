@@ -1,0 +1,75 @@
+<!-- index.html / version-4.3 /-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Project Manager 4.3</title>
+  </head>
+  <body>
+    <h1>{{ dynamic_title }}</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color: red; font-weight: bold; list-style-type: none; padding: 0;">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h2>Create New Project</h2>
+    <form action="/" method="POST">
+      <label for="title">Project Title:</label>
+      <input type="text" id="title" name="title" required />
+
+      <label for="status">Status:</label>
+      <select id="status" name="status">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Complete">Complete</option>
+      </select>
+
+      <button type="submit">Add Project</button>
+      <a href="{{ url_for('export_csv') }}" style="display: inline-block; padding: 8px 12px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 15px;">
+        Export Data to CSV
+      </a>
+    </form>
+
+    <hr />
+
+    <h2>Current Projects:</h2>
+    <ul>
+      {% for project in projects %}
+      <li>
+        <a href="{{ url_for('view_project', project_id=project.id) }}">
+          <strong>{{ project.title }}</strong>
+        </a>
+        - Status: {{ project.status }}
+
+        <form
+          action="{{ url_for('delete_project', project_id=project.id) }}"
+          method="POST"
+          style="display: inline"
+        >
+          <button
+            type="submit"
+            onclick="return confirm('Are you sure you want to delete {{ project.title }} and all its tasks?');"
+          >
+            Delete
+          </button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; background-color: #f9f9f9;">
+      <h3>Dashboard Statistics</h3>
+      <ul style="list-style-type: none; padding: 0;">
+        <li><strong>Total Projects:</strong> {{ stats.total_projects }}</li>
+        <li><strong>Total Tasks:</strong> {{ stats.total_tasks }}</li>
+        <li><strong>Completed Tasks:</strong> {{ stats.completed_tasks }}</li>
+        <li><strong>Pending Tasks:</strong> {{ stats.pending_tasks }}</li>
+      </ul>
+    </div>
+  </body>
+</html>
