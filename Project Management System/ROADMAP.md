@@ -163,9 +163,9 @@
 
 ## Version 4.5
 
-- [ ] Sorting / Filter interaction for tasks
-- [ ] database restructure
-- [ ] file attachment implementation
+- [x] Sorting / Filter interaction for tasks
+- [x] database restructure
+- [x] file attachment implementation
 
 ---
 
