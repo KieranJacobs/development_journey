@@ -139,6 +139,20 @@
 
 ---
 
+## Version 4.2
+
+- [x] fix export to CSV query
+- [x] typo's in project_details
+
+---
+
+## Version 4.3
+
+- [ ] update date format & chronological sorting issue
+- [ ] fixing error message posting in app.py
+
+---
+
 ## Version 5
 
 - [ ] JavaScript Frontend
