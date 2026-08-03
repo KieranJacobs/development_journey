@@ -171,8 +171,9 @@
 
 ## Version 5
 
-- [ ] JavaScript Frontend
-- [ ] Supporting Features?
+- [x] JavaScript delete_task button
+- [x] update Flask route
+- [x] JavaScript Task Status button
 
 ---
 
