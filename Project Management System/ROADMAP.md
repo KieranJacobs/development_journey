@@ -177,6 +177,14 @@
 
 ---
 
+## Version 5.1
+
+- [x] JavaScript Project Status dropdown
+- [x] Add_task form
+- [x] CSS stylesheet
+
+---
+
 ## Version 6
 
 - [ ] Docker
