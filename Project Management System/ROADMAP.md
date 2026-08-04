@@ -193,6 +193,14 @@
 
 ---
 
+## Version 5.3
+
+- [x] API Groundwork for C# implementation
+- [x] UI Grid system
+- [x] Centralized API Client Layer
+
+---
+
 ## Version 6
 
 - [ ] Docker
