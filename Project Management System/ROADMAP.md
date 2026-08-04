@@ -185,6 +185,14 @@
 
 ---
 
+## Version 5.2
+
+- [x] UI & Button alignment
+- [x] Event Delegation
+- [x] Button Loading States
+
+---
+
 ## Version 6
 
 - [ ] Docker
