@@ -201,6 +201,14 @@
 
 ---
 
+## Version 5.4
+
+- [x] Dashboard Decoupling
+- [x] Real-time Search Bar
+- [x] API Client Refactor
+
+---
+
 ## Version 6
 
 - [ ] Docker
