@@ -209,6 +209,15 @@
 
 ---
 
+## Version 5.5
+
+- [x] fix dashboard description bug
+- [x] binary backend
+- [x] asynchronous uploads
+- [x] blob downloads
+
+---
+
 ## Version 6
 
 - [ ] Docker
