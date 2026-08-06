@@ -220,8 +220,11 @@
 
 ## Version 6
 
-- [ ] Docker
-- [ ] Supporting Features?
+- [x] Installation & Setup (external)
+- [x] Docker VS Code setup
+- [x] Decoupling remaining functions
+- [x] Expanding API Client
+- [x] project descriptions
 
 ---
 
