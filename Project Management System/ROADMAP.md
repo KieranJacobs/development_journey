@@ -228,6 +228,21 @@
 
 ---
 
+## Version 6.1
+
+- [x] Frontend Infrastructure (node.js)
+- [x] docker & backend connectivity
+- [x] decoupling more files
+- [x] expanding API client (useEffect & fetch())
+
+---
+
+## Version 6.2
+
+- [ ]
+
+---
+
 ## Version 7
 
 - [ ] non-Windows OS deployment

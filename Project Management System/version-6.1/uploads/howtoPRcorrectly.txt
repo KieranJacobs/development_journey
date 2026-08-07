@@ -1,0 +1,50 @@
+Example 1: The "New Feature" PR (Adding functionality)
+Use this when you have successfully written a new script, function, or database helper.
+
+Title: feat: Add data cleaning script for weather sensor data
+
+Description: Added clean_data.py to filter out the -99 glitch values from our raw dataset. It parses the raw list, tracks the count of errors, and calculates the true average.
+
+Key Changes:
+Created clean_data.py containing the filter_glitches() function.
+Added a dummy list of raw data at the bottom of the script for testing.
+
+How to Test:
+
+- Pull this branch.
+- Open your terminal and run: python clean_data.py
+- Verify it prints True Average: 21.71 and Glitches: 3 without throwing any errors.
+-------------------------------------------------------
+Example 2: The "Bug Fix" PR (Fixing broken code)
+Use this when you find a bug in existing code (yours or a teammate's) and fix it.
+
+Title: fix: Prevent crash when dataset has 100% glitch readings
+Description: Fixed a ZeroDivisionError that occurred in clean_data.py if a dataset contained only -99 values. This happened because valid_count remained at 0, causing the average calculation to divide by zero.
+
+Key Changes:
+Added an if valid_count == 0 check before calculating the final average.
+It now returns 0.0 as the average if no valid data is found, instead of crashing.
+
+How to Test:
+Run python clean_data.py using a test list containing only glitches, like [-99, -99, -99]. Confirm the script prints True Average: 0.0 rather than crashing with a red error stack.
+-------------------------------------------------------
+Example 3: The "Chore / Setup" PR (Updating the project environment)
+Use this when you change the configuration, update a requirements.txt or Conda file, or fix documentation.
+
+Title: chore: Add conda environment.yml configuration
+Description:
+Created the Conda environment configuration file so we are all running the exact same Python version and libraries for this assessment.
+
+Key Changes:
+Added environment.yml to the project root directory.
+Included python=3.11, pandas, numpy, and jupyter in the package list.
+
+How to Test:
+Run conda env create -f environment.yml in your terminal to ensure the environment builds cleanly without any package conflicts.
+-----------------------------------------------------
+💡 The "No-Bloat" Rules of Thumb:
+Use prefixes in titles: Using prefixes like feat: (feature), fix: (bug fix), or chore: (setup/docs) makes a commit history instantly readable. (This is called Conventional Commits, and professional teams love it).
+
+Keep "How to Test" dead simple: Write the exact terminal command your partner needs to copy-paste. This saves them from guessing how to run your new code.
+
+No essays: If a PR takes more than 1 minute to read, it has too much bloat. Keep it bulleted and direct.
