@@ -1,0 +1,36 @@
+# Task 3: File Formatting
+
+def format_student_records(input_file, output_file):
+    try:
+        # Read all lines and strip newline characters
+        with open(input_file, 'r') as file:
+            lines = [line.strip() for line in file.readlines()]
+            
+        # Extract the specific 5-line data chunks
+        ids = lines[0:5]
+        first_names = lines[5:10]
+        last_names = lines[10:15]
+        campuses = lines[15:20]
+        modes = lines[20:25]
+
+        # Open the new v2 file for writing
+        with open(output_file, 'w') as file:
+            for i in range(5):
+                # Dynamically generate the email address
+                email = f"{first_names[i].lower()}_{last_names[i].lower()}@yoobeecolleges.com"
+                
+                # Write the organized structure
+                file.write(f"ID: {ids[i]}\n")
+                file.write(f"Name: {first_names[i]} {last_names[i]}\n")
+                file.write(f"Campus: {campuses[i]}\n")
+                file.write(f"Mode of Study: {modes[i]}\n")
+                file.write(f"Email: {email}\n")
+                file.write("-" * 30 + "\n") # Divider between students
+                
+        print(f"Success! Formatted records saved to {output_file}")
+
+    except FileNotFoundError:
+        print(f"Error: Could not locate '{input_file}'.")
+
+# Execution Command:
+# format_student_records('student_record_v1.txt', 'student_record_v2.txt')

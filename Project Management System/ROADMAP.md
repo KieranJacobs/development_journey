@@ -234,18 +234,22 @@
 - [x] docker & backend connectivity
 - [x] decoupling more files
 - [x] expanding API client (useEffect & fetch())
+- [x] Imported Figma design
 
 ---
 
 ## Version 6.2
 
-- [ ]
+- [x] Backend flask route
+- [x] frontend data pipeline
+- [x] wire up project creation, task creation, & task deletion
 
 ---
 
 ## Version 7
 
 - [ ] non-Windows OS deployment
+- [ ] File Migration
 - [ ] Supporting Features?
 
 ---
