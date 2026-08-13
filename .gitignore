@@ -14,3 +14,9 @@ sqlite3_cheatsheet.md
 sqlite3-info.txt
 
 .prettierignore
+.github/
+.github/*
+.instructions.md
+.agent.md
+.continue/
+.vscode/

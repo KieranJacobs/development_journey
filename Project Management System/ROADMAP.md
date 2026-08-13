@@ -246,9 +246,27 @@
 
 ---
 
+## Version 6.3
+
+- [x] update database schema, API task ops, API route alignment
+- [x] Parameterize SQLite queries & enforce secure PRAGMA configs
+- [x] Implement rate limiting across Flask API endpoints
+- [x] Wire up React frontend error handling for secured API responses
+
+---
+
+## Version 6.4
+
+- [ ] env-based secret and CORS config
+- [ ] upload validation and max size enforcement
+- [ ] disable debug mode in production
+- [ ] (OPTIONAL) move the rate limiter to a shared backend for multi-process deployments
+
+---
+
 ## Version 7
 
-- [ ] non-Windows OS deployment
+- [ ] non-Windows OS deployment(maybe)
 - [ ] File Migration
 - [ ] Supporting Features?
 

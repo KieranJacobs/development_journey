@@ -1,0 +1,65 @@
+<!-- index.html / version-6.3 /-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Project Manager 6.3</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <script src="{{ url_for('static', filename='js/api.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  </head>
+  <body>
+    <h1>{{ dynamic_title }}</h1>
+
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul style="color: red; font-weight: bold; list-style-type: none; padding: 0">
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+
+    <h2>Create New Project</h2>
+    <form action="/" method="POST">
+      <label for="title">Project Title:</label>
+      <input type="text" id="title" name="title" required />
+
+      <label for="status">Status:</label>
+      <select id="status" name="status">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Complete">Complete</option>
+      </select>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button type="submit">Add Project</button>
+        <button type="button" onclick="window.location.href='{{ url_for('export_csv') }}'">
+          Export Data to CSV
+        </button>
+      </div>
+    </form>
+
+    <hr />
+
+    <h2>Current Projects:</h2>
+    <!-- Dashboard Search Bar -->
+    <input type="text" id="project-search" placeholder="Search Projects..." style="width: 100%; padding: 10px; margin-bottom: 20px; box-sizing: border-box; background-color: #1e1e1e; color: white; border: 1px solid #333; border-radius: 5px;">
+    <ul id="project-list">
+    </ul>
+    <fieldset>
+      <legend><strong>Dashboard Statistics</strong></legend>
+      <p style="margin: 0">
+        <strong>Total Projects:</strong> <span id="stat-total-projects">Loading...</span>
+      </p>
+      <p style="margin: 0">
+        <strong>Total Tasks:</strong> <span id="stat-total-tasks">Loading...</span>
+      </p>
+      <p style="margin: 0">
+        <strong>Completed Tasks:</strong> <span id="stat-completed-tasks">Loading...</span>
+      </p>
+      <p style="margin: 0">
+        <strong>Pending Tasks:</strong> <span id="stat-pending-tasks">Loading...</span>
+      </p>
+    </fieldset>
+  </body>
+</html>
