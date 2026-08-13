@@ -1,0 +1,97 @@
+<!-- project_details.html / version-6.4 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ project.title }} - Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <script src="{{ url_for('static', filename='js/api.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  </head>
+  <body>
+    <a href="{{ url_for('home') }}"> Back to Dashboard</a>
+
+    <h1>Project: {{ project.title }}</h1>
+    <h3>
+      Status:
+      <form action="{{ url_for('update_project_status', project_id=project.id)}}" method="POST" style="display: inline">
+        <select name="project_status" id="project-status-dropdown" data-project-id="{{ project.id }}">
+          <option value="Pending" {% if project.status == "Pending" %}selected{% endif %}>Pending</option>
+          <option value="In Progress" {% if project.status == "In Progress" %}selected{% endif %}>In Progress</option>
+          <option value="Complete" {% if project.status == "Complete" %}selected{% endif %}>Complete</option>
+        </select>
+      </form>
+    </h3>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color: red; font-weight: bold; list-style-type: none; padding: 0;">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h3>Project Description</h3>
+    <textarea id="project-description" data-project-id="{{ project.id }}" rows="4" style="width: 100%; background: #1e1e1e; color: white; border: 1px solid #333; padding: 10px; margin-bottom: 10px; border-radius: 5px;">{{ project.description if project.description else '' }}</textarea>
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <button id="save-description-btn">Save Description</button>
+      <button id="ai-generate-btn" style="background-color: #9c27b0; opacity: 0.5;cursor: not-allowed;" title="AI Assistant arriving in a future update" disabled>✨ AI Generate</button>
+    </div>
+
+
+    <h3>Add a New Task</h3>
+    <form id="add-task-form" action="{{ url_for('add_task', project_id=project.id) }}" method="POST" data-project-id="{{ project.id }}">
+      <label for="task_title">Task Title:</label>
+      <input type="text" id="task_title" name="task_title" required />
+
+      <label for="task_priority">Priority:</label>
+      <select id="task_priority" name="task_priority">
+        <option value="High">High</option>
+        <option value="Moderate">Moderate</option>
+        <option value="Low">Low</option>
+      </select>
+
+      <label for="task_due_date">Due Date:</label>
+      <input type="date" id="task_due_date" name="task_due_date" required />
+
+      <button type="submit">Add Task</button>
+    </form>
+    <hr />
+
+    <h2>Tasks</h2>
+    <form action="{{ url_for('view_project', project_id=project.id) }}" method="GET" style="margin-bottom: 15px;">
+      <label for="sort" style="font-weight: bold; margin-right: 10px;">Sort Tasks By:</label>
+      <select name="sort" id="sort" onchange="this.form.submit()" style="width: auto; display: inline-block;">
+        <option value="">Default (Added Order)</option>
+        <option value="priority" {% if current_sort == 'priority' %}selected{% endif %}>Priority (High to Low)</option>
+        <option value="date" {% if current_sort == 'date' %}selected{% endif %}>Due Date</option>
+      </select>
+    </form>
+    <div class="task-board">
+      <div class="task-column">
+        <h3 class="column-header" style="color: #ffa502;">Pending Tasks</h3>
+        <ul id="pending-tasks" class="task-list-container"></ul>
+      </div>
+
+      <div class="task-column">
+        <h3 class="column-header" style="color: #2ed573;">Completed Tasks</h3>
+        <ul id="completed-tasks" class="task-list-container"></ul>
+      </div>
+    </div>
+
+
+<h2>Project Attachments</h2>
+    
+    <form id="upload-file-form" data-project-id="{{ project.id }}" style="margin-bottom: 15px;">
+      <input type="file" id="file-input" name="file" required style="margin-right: 10px;" />
+      <button type="submit">Upload File</button>
+    </form>
+    
+    
+    <ul id="attachment-list"></ul>
+    <p id="empty-attachment-msg" style="display: none;">No files attached to this project yet.</p>
+    
+    <hr />
+  </body>
+</html>

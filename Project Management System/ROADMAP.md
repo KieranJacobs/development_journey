@@ -257,10 +257,14 @@
 
 ## Version 6.4
 
-- [ ] env-based secret and CORS config
-- [ ] upload validation and max size enforcement
-- [ ] disable debug mode in production
-- [ ] (OPTIONAL) move the rate limiter to a shared backend for multi-process deployments
+- [x] env-based secret and CORS config
+- [x] upload validation and max size enforcement
+- [x] disable debug mode in production
+- [x] (OPTIONAL) move the rate limiter to a shared backend for multi-process deployments
+- [x] Github Actions Ci pipeline for testing and deployment
+- [x] Automated Pytest suite for backend and frontend
+- [x] Dev dependencies for frontend and backend
+- [x] Path refactoring for frontend and backend
 
 ---
 

@@ -4,6 +4,7 @@ ImportantPythonInfo/
 Project Management Dashboard/
 
 __pycache__/
+.pytest_cache/
 *.pyc
 *.pyo
 *.pyd
@@ -20,3 +21,10 @@ sqlite3-info.txt
 .agent.md
 .continue/
 .vscode/
+
+tests/
+pytest.ini
+requirements-dev.txt
+requirements.txt
+.env.example
+
