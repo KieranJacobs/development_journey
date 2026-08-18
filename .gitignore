@@ -28,3 +28,6 @@ requirements-dev.txt
 requirements.txt
 .env.example
 
+project_manager.db
+project_manager.db-shm
+project_manager.db-wal

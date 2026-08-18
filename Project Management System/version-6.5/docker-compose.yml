@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  project-manager:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./:/app
+      - ./uploads:/app/uploads
+    environment:
+      # Disable Flask debug in container by default; set to 1 only for explicit development runs
+      - FLASK_DEBUG=1

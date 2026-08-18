@@ -268,6 +268,18 @@
 
 ---
 
+## Version 6.5
+
+- [x] Disable/grey-out all group member functionality in frontend dashboard.
+- [x] Disable assignee functionality in frontend dashboard.
+- [x] Disable/grey-out all group member functionality in backend API.
+
+---
+
+## Version 6.6
+
+---
+
 ## Version 7
 
 - [ ] non-Windows OS deployment(maybe)
